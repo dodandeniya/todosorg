@@ -29,6 +29,9 @@
     "mytodos-app-e2e": {
       "tags": [],
       "implicitDependencies": ["mytodos-app"]
+    },
+    "server": {
+      "tags": []
     }
   }
 }
