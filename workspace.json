@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "projects": {
+    "mytodos-app": {
+      "root": "apps/mytodos-app",
+      "sourceRoot": "apps/mytodos-app/src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/apps/mytodos-app",
+            "index": "apps/mytodos-app/src/index.html",
+            "main": "apps/mytodos-app/src/main.tsx",
+            "polyfills": "apps/mytodos-app/src/polyfills.ts",
+            "tsConfig": "apps/mytodos-app/tsconfig.app.json",
+            "assets": [
+              "apps/mytodos-app/src/favicon.ico",
+              "apps/mytodos-app/src/assets"
+            ],
+            "styles": ["apps/mytodos-app/src/styles.css"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/mytodos-app/src/environments/environment.ts",
+                  "with": "apps/mytodos-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "mytodos-app:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "mytodos-app:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/mytodos-app/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/mytodos-app/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "mytodos-app-e2e": {
+      "root": "apps/mytodos-app-e2e",
+      "sourceRoot": "apps/mytodos-app-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/mytodos-app-e2e/cypress.json",
+            "tsConfig": "apps/mytodos-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "mytodos-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "mytodos-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/mytodos-app-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "schematics": {
+    "@nrwl/react": {
+      "application": {
+        "style": "css",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "css"
+      },
+      "library": {
+        "style": "css",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "mytodos-app"
+}
