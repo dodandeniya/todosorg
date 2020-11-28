@@ -32,6 +32,9 @@
     },
     "server": {
       "tags": []
+    },
+    "common-share": {
+      "tags": []
     }
   }
 }
