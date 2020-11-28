@@ -1,9 +1,11 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
+import { importData } from '../src/app/data/seeder';
 import * as express from 'express';
+import connectDB from './config/db-config';
+
+connectDB();
+
+// adding seed data to db.
+//importData();
 
 const app = express();
 
