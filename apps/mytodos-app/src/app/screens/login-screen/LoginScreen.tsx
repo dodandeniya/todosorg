@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-//import { login } from '../../redux/actions/userActions';
+import { login } from '../../redux/actions/userActions';
 import './LoginScreen.css';
 import { CenterComponent } from '../../components/center-component/CenterComponent';
 import { Loader } from '../../components/loader/Loader';
@@ -17,7 +17,7 @@ import {
   createStyles,
   Container,
 } from '@material-ui/core';
-//import { RootState } from '../../redux/reducers';
+import { RootState } from '../../redux/reducers';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -51,19 +51,19 @@ export const LoginScreen = (props: LoginScreenProps) => {
     ? props.location.search.split('=')[1]
     : '/';
 
-  // const dispatch = useDispatch();
-  /*const userLogin = useSelector((state: RootState) => state.userLogin);
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state: RootState) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
   useEffect(() => {
     if (userInfo) {
       props.history.push(redirect);
     }
-  }, [props.history, userInfo, redirect]);*/
+  }, [props.history, userInfo, redirect]);
 
   const submitHandler = (e: any) => {
     e.preventDefault();
-    //dispatch(login(email, password));
+    dispatch(login(email, password));
   };
 
   return (
@@ -76,7 +76,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
         >
           Sign In
         </Typography>
-        {/*{error && (
+        {error && (
           <Container>
             <Alert severity="error">
               <AlertTitle>Error</AlertTitle>
@@ -84,7 +84,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
             </Alert>
           </Container>
         )}
-        {loading && <Loader height="5vh" />}*/}
+        {loading && <Loader height="5vh" />}
         <form onSubmit={submitHandler} className="m-3">
           <FormGroup id="email" className="py-1 px-3">
             <TextField
@@ -117,7 +117,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
           </Button>
         </form>
       </Card>
-      New Customer?{' '}
+      New User?{' '}
       <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
         Register
       </Link>

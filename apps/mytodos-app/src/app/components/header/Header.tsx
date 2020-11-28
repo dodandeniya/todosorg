@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import PersonIcon from '@material-ui/icons/Person';
+import ListIcon from '@material-ui/icons/List';
 import { Link } from 'react-router-dom';
 import {
   AppBar,
@@ -13,8 +14,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-/*import { RootState } from '../../redux/reducers';
-import { logout } from '../../redux/actions/userActions';*/
+import { RootState } from '../../redux/reducers';
+import { logout } from '../../redux/actions/userActions';
 
 import './Header.css';
 
@@ -51,6 +52,27 @@ export interface HeaderProps {}
 
 export function Header(props: HeaderProps) {
   const classes = useStyles();
+  const { userInfo } = useSelector((state: RootState) => state.userLogin);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const isDropDownOpen = Boolean(anchorEl);
+  const dispatch = useDispatch();
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const logoutHandler = () => {
+    setAnchorEl(null);
+    dispatch(logout());
+  };
+
+  const profileHandler = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <div className={classes.root}>
@@ -66,20 +88,13 @@ export function Header(props: HeaderProps) {
             My Todos App
           </Typography>
           <div className={classes.spaceSection}></div>
-          {/*<IconButton
-            className={classes.button}
-            aria-label="show 4 new mails"
-            color="inherit"
-            component={Link}
-            to="/cart"
-          >
-            <Badge
-              badgeContent={cartItems.reduce((acc, item) => acc + item.qty, 0)}
-              color="secondary"
-            >
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
+          {userInfo && (
+            <IconButton className={classes.button} color="inherit">
+              <Badge badgeContent="4" color="secondary">
+                <ListIcon />
+              </Badge>
+            </IconButton>
+          )}
 
           {userInfo ? (
             <div>
@@ -91,7 +106,7 @@ export function Header(props: HeaderProps) {
                 aria-haspopup="true"
                 onClick={handleMenu}
               >
-                {userInfo.name}
+                {userInfo.lastName}
               </Button>
               <Menu
                 id="menu-appbar"
@@ -108,13 +123,6 @@ export function Header(props: HeaderProps) {
                 open={isDropDownOpen}
                 onClose={handleClose}
               >
-                <MenuItem
-                  component={Link}
-                  to="/profile"
-                  onClick={profileHandler}
-                >
-                  Profile
-                </MenuItem>
                 <MenuItem onClick={logoutHandler}>Logout</MenuItem>
               </Menu>
             </div>
@@ -128,7 +136,7 @@ export function Header(props: HeaderProps) {
             >
               Sign In
             </Button>
-          )}*/}
+          )}
         </Toolbar>
       </AppBar>
     </div>
