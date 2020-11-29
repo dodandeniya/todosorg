@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../../redux/actions/userActions';
-import './LoginScreen.css';
+import { register } from '../../redux/actions/userActions';
 import { CenterComponent } from '../../components/center-component/CenterComponent';
 import { Loader } from '../../components/loader/Loader';
 import {
@@ -13,12 +12,13 @@ import {
   Button,
   makeStyles,
   Theme,
-  Grid,
   createStyles,
   Container,
 } from '@material-ui/core';
 import { RootState } from '../../redux/reducers';
 import { Alert, AlertTitle } from '@material-ui/lab';
+
+import './RegisterScreen.css';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,23 +37,28 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 /* eslint-disable-next-line */
-export interface LoginScreenProps {
+export interface RegisterScreenProps {
   history: any;
   location: any;
 }
 
-export const LoginScreen = (props: LoginScreenProps) => {
+export const RegisterScreen = (props: RegisterScreenProps) => {
   const classes = useStyles();
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState(null);
+  const [isButtonDisabled, setButtonDisable] = useState(false);
 
   const redirect = props.location.search
     ? props.location.search.split('=')[1]
-    : '/home';
+    : '/';
 
   const dispatch = useDispatch();
-  const userLogin = useSelector((state: RootState) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const userRegister = useSelector((state: RootState) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
 
   useEffect(() => {
     if (userInfo) {
@@ -63,7 +68,18 @@ export const LoginScreen = (props: LoginScreenProps) => {
 
   const submitHandler = (e: any) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    dispatch(register(firstName, lastName, email, password));
+  };
+
+  const onfocusoutHandler = (e: any) => {
+    if (password !== confirmPassword) {
+      setMessage('Passwords do not match');
+      setButtonDisable(true);
+      return;
+    }
+
+    setMessage(null);
+    setButtonDisable(false);
   };
 
   return (
@@ -74,7 +90,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
           component="h1"
           variant="h5"
         >
-          Sign In
+          Sign Up
         </Typography>
         {error && (
           <Container>
@@ -84,8 +100,42 @@ export const LoginScreen = (props: LoginScreenProps) => {
             </Alert>
           </Container>
         )}
+        {message && (
+          <Container>
+            <Alert severity="error">
+              <AlertTitle>Error</AlertTitle>
+              {message}
+            </Alert>
+          </Container>
+        )}
         {loading && <Loader height="5vh" />}
         <form onSubmit={submitHandler} className="m-3">
+          <FormGroup id="firstName" className="py-1 px-3">
+            <TextField
+              id="firstName"
+              required
+              placeholder="First Name"
+              label="First Name"
+              color="primary"
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </FormGroup>
+
+          <FormGroup id="lastName" className="py-1 px-3">
+            <TextField
+              id="lastName"
+              required
+              placeholder="Last Name"
+              label="Last Name"
+              color="primary"
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </FormGroup>
+
           <FormGroup id="email" className="py-1 px-3">
             <TextField
               id="email"
@@ -112,17 +162,35 @@ export const LoginScreen = (props: LoginScreenProps) => {
             />
           </FormGroup>
 
-          <Button type="submit" className={`${classes.button} btn-block`}>
-            Sign In
+          <FormGroup id="confirmPassword" className="py-1 px-3">
+            <TextField
+              id="confirmPassword"
+              required
+              placeholder="Confirm Password"
+              label="Confirm Password"
+              color="primary"
+              type="password"
+              onBlur={onfocusoutHandler}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </FormGroup>
+
+          <Button
+            type="submit"
+            disabled={isButtonDisabled}
+            className={`${classes.button} btn-block`}
+          >
+            Register
           </Button>
         </form>
       </Card>
-      New User?{' '}
-      <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-        Register
+      Have an Account?{' '}
+      <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
+        Login
       </Link>
     </CenterComponent>
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;
