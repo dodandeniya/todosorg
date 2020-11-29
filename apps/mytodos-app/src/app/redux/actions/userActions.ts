@@ -7,6 +7,7 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_RESET,
+  TODOS_LIST_RESET,
 } from '../constants';
 import * as api from '../../Apis/userApiService';
 
@@ -33,6 +34,7 @@ export const login = (email: string, password: string) => async (
 export const logout = () => (dispatch: any) => {
   localStorage.removeItem('userInfo');
   dispatch({ type: USER_LOGOUT });
+  dispatch({ type: TODOS_LIST_RESET });
 };
 
 export const register = (

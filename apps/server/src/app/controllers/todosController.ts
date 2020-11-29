@@ -17,7 +17,9 @@ export const createTodoItem = asyncHandler(async (req, res) => {
 
   if (todoItem) {
     res.status(201).json({
-      todoItem,
+      id: todoItem._id,
+      todoName: todoItem.todoName,
+      status: todoItem.status,
     });
   } else {
     res.status(400);
@@ -36,7 +38,9 @@ export const updateTodoItem = asyncHandler(async (req: any, res) => {
     const updateTodo = await todoItem.save();
 
     res.json({
-      updateTodo,
+      id: updateTodo._id,
+      todoName: updateTodo.todoName,
+      status: updateTodo.status,
     });
   } else {
     res.status(400);
@@ -46,9 +50,13 @@ export const updateTodoItem = asyncHandler(async (req: any, res) => {
 
 export const getTodosListByUserId = asyncHandler(async (req, res) => {
   const userId = req.params.userId;
-  let objectId = mongoose.Schema.Types.ObjectId;
   const todosList = await Todo.find({ user: userId });
-  res.json(todosList);
+  const result = todosList.map((item) => ({
+    id: item._id,
+    todoName: item.todoName,
+    status: item.status,
+  }));
+  res.json(result);
 });
 
 export const deleteTodoItem = asyncHandler(async (req, res) => {
@@ -57,7 +65,11 @@ export const deleteTodoItem = asyncHandler(async (req, res) => {
   if (item) {
     try {
       const result = await Todo.findByIdAndDelete(item._id);
-      res.json(result);
+      res.json({
+        id: result._id,
+        todoName: result.todoName,
+        status: result.status,
+      });
     } catch (error) {
       res.status(404);
       throw new Error('Todo item not found');
@@ -72,7 +84,7 @@ export const getTodoItemtById = asyncHandler(async (req, res) => {
   const item = await Todo.findById(req.params.id);
 
   if (item) {
-    res.json(item);
+    res.json({ id: item._id, todoName: item.todoName, status: item.status });
   } else {
     res.status(404);
     throw new Error('Todo item not found');

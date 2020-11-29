@@ -89,13 +89,13 @@ export function Header(props: HeaderProps) {
             My Todos App
           </Typography>
           <div className={classes.spaceSection}></div>
-          {userInfo && (
+          {/*{userInfo && (
             <IconButton className={classes.button} color="inherit">
               <Badge badgeContent="4" color="secondary">
                 <ListIcon />
               </Badge>
             </IconButton>
-          )}
+          )}*/}
 
           {userInfo ? (
             <div>

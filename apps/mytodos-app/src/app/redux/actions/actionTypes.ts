@@ -1,4 +1,8 @@
 import {
+  TODOS_LIST_FAIL,
+  TODOS_LIST_REQUEST,
+  TODOS_LIST_RESET,
+  TODOS_LIST_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -23,4 +27,14 @@ interface IUserTypes {
   payload: IUserInfo | string;
 }
 
+interface ITodosTypes {
+  type:
+    | typeof TODOS_LIST_SUCCESS
+    | typeof TODOS_LIST_FAIL
+    | typeof TODOS_LIST_REQUEST
+    | typeof TODOS_LIST_RESET;
+  payload: any;
+}
+
 export type UserTypes = IUserTypes;
+export type TodosTypes = ITodosTypes;
