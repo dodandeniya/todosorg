@@ -8,25 +8,14 @@ import {
   USER_REGISTER_SUCCESS,
   USER_REGISTER_RESET,
 } from '../constants';
-import axios from 'axios';
+import * as api from '../../Apis/userApiService';
 
-export const login = (email: String, password: String) => async (
+export const login = (email: string, password: string) => async (
   dispatch: any
 ) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST });
-
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const { data } = await axios.post(
-      '/api/users/login',
-      { email, password },
-      config
-    );
+    const data = await api.login(email, password);
 
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
     localStorage.setItem('userInfo', JSON.stringify(data));
@@ -47,24 +36,15 @@ export const logout = () => (dispatch: any) => {
 };
 
 export const register = (
-  name: string,
-  email: String,
-  password: String
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string
 ) => async (dispatch: any) => {
   try {
     dispatch({ type: USER_REGISTER_REQUEST });
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const { data } = await axios.post(
-      '/api/users',
-      { name, email, password },
-      config
-    );
+    const data = await api.register(firstName, lastName, email, password);
 
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
