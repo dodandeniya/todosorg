@@ -16,7 +16,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/reducers';
 import { logout } from '../../redux/actions/userActions';
-
+import LeftDrawer from '../../components/drawer/LeftDrawer';
 import './Header.css';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -78,6 +78,7 @@ export function Header(props: HeaderProps) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
+          {userInfo && <LeftDrawer />}
           <Typography
             variant="h6"
             className={classes.title}
