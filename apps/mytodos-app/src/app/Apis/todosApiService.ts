@@ -51,3 +51,8 @@ export const removeCompletedTodoItems = async (token: string) => {
   );
   return data;
 };
+
+export const createTodoItem = async (item: any, token: string) => {
+  const { data } = await axios.post(`/api/todos`, item, getConfig(token));
+  return data;
+};

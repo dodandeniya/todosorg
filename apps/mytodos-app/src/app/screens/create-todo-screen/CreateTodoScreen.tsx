@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../../redux/actions/userActions';
-import './LoginScreen.css';
 import { CenterComponent } from '../../components/center-component/CenterComponent';
 import { Loader } from '../../components/loader/Loader';
 import {
@@ -19,6 +17,9 @@ import {
 } from '@material-ui/core';
 import { RootState } from '../../redux/reducers';
 import { Alert, AlertTitle } from '@material-ui/lab';
+
+import './CreateTodoScreen.css';
+import { CreateTodoItem } from '../../redux/actions/todosActions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,33 +38,21 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 /* eslint-disable-next-line */
-export interface LoginScreenProps {
+export interface CreateTodoScreenProps {
   history: any;
-  location: any;
 }
 
-export const LoginScreen = (props: LoginScreenProps) => {
+export function CreateTodoScreen(props: CreateTodoScreenProps) {
   const classes = useStyles();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const redirect = props.location.search
-    ? props.location.search.split('=')[1]
-    : '/home';
-
+  const [todoName, setTodoName] = useState('');
+  const todosList = useSelector((state: RootState) => state.todosList);
+  const { loading, error } = todosList;
   const dispatch = useDispatch();
-  const userLogin = useSelector((state: RootState) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
-
-  useEffect(() => {
-    if (userInfo) {
-      props.history.push(redirect);
-    }
-  }, [props.history, userInfo, redirect]);
 
   const submitHandler = (e: any) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    dispatch(CreateTodoItem(todoName));
+    props.history.push('/home');
   };
 
   return (
@@ -74,7 +63,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
           component="h1"
           variant="h5"
         >
-          Sign In
+          Create Todo Item
         </Typography>
         {error && (
           <Container>
@@ -86,39 +75,26 @@ export const LoginScreen = (props: LoginScreenProps) => {
         )}
         {loading && <Loader height="5vh" />}
         <form onSubmit={submitHandler} className="m-3">
-          <FormGroup id="email" className="py-1 px-3">
+          <FormGroup id="todoItem" className="py-1 px-3">
             <TextField
-              id="email"
+              id="todoItem"
               required
-              placeholder="E-mail"
-              label="E-mail"
+              placeholder="Todo Name"
+              label="Todo Name"
               color="primary"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </FormGroup>
-
-          <FormGroup id="password" className="py-1 px-3">
-            <TextField
-              id="password"
-              required
-              placeholder="Password"
-              label="Password"
-              color="primary"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              type="text"
+              value={todoName}
+              onChange={(e) => setTodoName(e.target.value)}
             />
           </FormGroup>
 
           <Button type="submit" className={`${classes.button} btn-block`}>
-            Sign In
+            Create
           </Button>
         </form>
       </Card>
     </CenterComponent>
   );
-};
+}
 
-export default LoginScreen;
+export default CreateTodoScreen;

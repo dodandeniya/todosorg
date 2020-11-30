@@ -12,6 +12,10 @@ import {
   TODOS_REMOVE_COMPLETED_ITEMS_REQUEST,
   TODOS_REMOVE_COMPLETED_ITEMS_SUCCESS,
   TODOS_REMOVE_COMPLETED_ITEMS_FAIL,
+  TODOS_CREATE_FAIL,
+  TODOS_CREATE_REQUEST,
+  TODOS_CREATE_RESET,
+  TODOS_CREATE_SUCCESS,
 } from '../constants';
 import * as api from '../../Apis/todosApiService';
 import { ITodoInfo } from '../interfaces/payloadTodo';
@@ -113,6 +117,32 @@ export const removeCompletedTodoItems = () => async (
   } catch (error) {
     dispatch({
       type: TODOS_REMOVE_COMPLETED_ITEMS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const CreateTodoItem = (item: string) => async (
+  dispatch: any,
+  getState: any
+) => {
+  try {
+    dispatch({ type: TODOS_CREATE_REQUEST });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    let temp = { userId: userInfo.id, todoName: item };
+
+    const data = await api.createTodoItem(temp, userInfo.token);
+
+    dispatch({ type: TODOS_CREATE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: TODOS_LIST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
