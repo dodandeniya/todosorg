@@ -10,6 +10,16 @@ const getConfig = (token: string) => {
   };
 };
 
+const getConfigWithData = (token: string, data: any) => {
+  return {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    data: data,
+  };
+};
+
 export const getTodosByUserId = async (userId: string, token: string) => {
   const { data } = await axios.get(
     `/api/todos/getbyuser/${userId}`,
@@ -21,6 +31,15 @@ export const getTodosByUserId = async (userId: string, token: string) => {
 
 export const updateTodoItem = async (item: any, token: string) => {
   const { data } = await axios.put(`/api/todos`, item, getConfig(token));
+
+  return data;
+};
+
+export const removeTodoItem = async (id: string, token: string) => {
+  const { data } = await axios.delete(
+    `/api/todos`,
+    getConfigWithData(token, { id: id })
+  );
 
   return data;
 };

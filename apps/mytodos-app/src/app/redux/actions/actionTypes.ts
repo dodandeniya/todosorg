@@ -15,6 +15,9 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_RESET,
   USER_REGISTER_SUCCESS,
+  TODOS_REMOVE_ITEM_REQUEST,
+  TODOS_REMOVE_ITEM_FAIL,
+  TODOS_REMOVE_ITEM_SUCCESS,
 } from '../constants';
 import { IUserInfo } from '../interfaces/payloadUser';
 
@@ -28,6 +31,7 @@ interface IUserTypes {
     | typeof USER_REGISTER_FAIL
     | typeof USER_REGISTER_REQUEST
     | typeof USER_REGISTER_RESET;
+
   payload: IUserInfo | string;
 }
 
@@ -40,7 +44,10 @@ interface ITodosTypes {
     | typeof TODOS_UPDATE_REQUEST
     | typeof TODOS_UPDATE_SUCCESS
     | typeof TODOS_UPDATE_FAIL
-    | typeof TODOS_UPDATE_RESET;
+    | typeof TODOS_UPDATE_RESET
+    | typeof TODOS_REMOVE_ITEM_REQUEST
+    | typeof TODOS_REMOVE_ITEM_FAIL
+    | typeof TODOS_REMOVE_ITEM_SUCCESS;
   payload: any;
 }
 

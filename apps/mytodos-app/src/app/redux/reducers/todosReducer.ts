@@ -8,6 +8,9 @@ import {
   TODOS_UPDATE_SUCCESS,
   TODOS_UPDATE_FAIL,
   TODOS_UPDATE_RESET,
+  TODOS_REMOVE_ITEM_REQUEST,
+  TODOS_REMOVE_ITEM_FAIL,
+  TODOS_REMOVE_ITEM_SUCCESS,
 } from '../constants';
 import { todoItemInitial, todosInitial } from '../initialStates';
 import { IPayloadTodos, ITodoInfo } from '../interfaces/payloadTodo';
@@ -25,6 +28,19 @@ export const todosListReducer = (
       return { loading: false, error: action.payload };
     case TODOS_LIST_RESET:
       return todosInitial;
+    case TODOS_REMOVE_ITEM_REQUEST:
+      return state;
+    case TODOS_REMOVE_ITEM_SUCCESS:
+      const item = action.payload;
+      const itemList = state.todos.filter((x) => x.id !== action.payload.id);
+      console.log(item);
+      console.log(itemList);
+      return {
+        ...state,
+        todos: state.todos.filter((x) => x.id !== action.payload.id),
+      };
+    case TODOS_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

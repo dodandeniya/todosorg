@@ -43,12 +43,14 @@ export interface TodoItemProps {
   item: ITodoInfo;
   startClickHandler: any;
   completeClickHandler: any;
+  deleteClickHandler: any;
 }
 
 export function TodoItem({
   item,
   startClickHandler,
   completeClickHandler,
+  deleteClickHandler,
 }: TodoItemProps) {
   const classes = useStyles();
   const [status, setStatus] = useState(item.status);
@@ -126,6 +128,7 @@ export function TodoItem({
                 aria-label="delete"
                 color="secondary"
                 className={classes.Deletebtn}
+                onClick={() => deleteClickHandler(item)}
               >
                 <DeleteIcon />
               </IconButton>
