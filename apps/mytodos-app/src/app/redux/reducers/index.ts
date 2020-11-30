@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
-import { todosListReducer } from './todosReducer';
+import { todoItemUpdateReducer, todosListReducer } from './todosReducer';
 import { userReducer, userRegisterReducer } from './userReducer';
 
 const rootReducer = combineReducers({
   userLogin: userReducer,
   userRegister: userRegisterReducer,
   todosList: todosListReducer,
+  todoUpdateItem: todoItemUpdateReducer,
 });
 
 export default rootReducer;

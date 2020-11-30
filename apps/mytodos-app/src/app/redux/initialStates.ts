@@ -1,4 +1,4 @@
-import IPayloadTodos from './interfaces/payloadTodo';
+import { IPayloadTodos, ITodoInfo } from './interfaces/payloadTodo';
 import IPayloadUser from './interfaces/payloadUser';
 
 export const userDetailsInitial: IPayloadUser = {
@@ -11,4 +11,9 @@ export const todosInitial: IPayloadTodos = {
   loading: false,
   todos: [],
   error: null,
+};
+
+export const todoItemInitial: ITodoInfo = {
+  todoName: '',
+  status: 0,
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/reducers';
 import { Alert, AlertTitle } from '@material-ui/lab';
-import { getTodosList } from '../../redux/actions/todosActions';
+import { getTodosList, updateTodoItem } from '../../redux/actions/todosActions';
 
 import './HomeScreen.css';
 import { Typography, Container, Grid } from '@material-ui/core';
@@ -32,6 +32,10 @@ export function HomeScreen(props: HomeScreenProps) {
     dispatch(getTodosList());
   }, [dispatch, props.history, userLogin]);
 
+  const updateStatusHandler = (item: ITodoInfo) => {
+    dispatch(updateTodoItem(item));
+  };
+
   return (
     <div>
       <Container>
@@ -57,7 +61,11 @@ export function HomeScreen(props: HomeScreenProps) {
           >
             {todos.map((item: ITodoInfo) => (
               <Grid key={item.id} item xs={12} sm={12} md={4} lg={4}>
-                <TodoItem item={item} />
+                <TodoItem
+                  item={item}
+                  startClickHandler={updateStatusHandler}
+                  completeClickHandler={updateStatusHandler}
+                />
               </Grid>
             ))}
           </Grid>
