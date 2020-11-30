@@ -17,3 +17,9 @@ export const todoItemInitial: ITodoInfo = {
   todoName: '',
   status: 0,
 };
+
+export const todosSearchInitial: IPayloadTodos = {
+  loading: false,
+  todos: [],
+  error: null,
+};

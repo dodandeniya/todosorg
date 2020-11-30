@@ -18,8 +18,16 @@ import {
   TODOS_CREATE_REQUEST,
   TODOS_CREATE_RESET,
   TODOS_CREATE_SUCCESS,
+  TODOS_SEARCH_REQUEST,
+  TODOS_SEARCH_FAIL,
+  TODOS_SEARCH_SUCCESS,
+  TODOS_SEARCH_RESET,
 } from '../constants';
-import { todoItemInitial, todosInitial } from '../initialStates';
+import {
+  todoItemInitial,
+  todosInitial,
+  todosSearchInitial,
+} from '../initialStates';
 import { IPayloadTodos, ITodoInfo } from '../interfaces/payloadTodo';
 
 export const todosListReducer = (
@@ -65,6 +73,15 @@ export const todosListReducer = (
     case TODOS_CREATE_FAIL:
       return { error: action.payload, ...state };
 
+    /*case TODOS_SEARCH_REQUEST:
+      return { loading: true, todos: [] };
+
+    case TODOS_SEARCH_SUCCESS:
+      return { loading: false, todos: action.payload };
+
+    case TODOS_SEARCH_FAIL:
+      return { loading: false, error: action.payload };*/
+
     default:
       return state;
   }
@@ -87,3 +104,44 @@ export const todoItemUpdateReducer = (
       return state;
   }
 };
+
+export const searchReducer = (
+  state = todosInitial,
+  action: TodosTypes
+): IPayloadTodos => {
+  switch (action.type) {
+    case TODOS_SEARCH_REQUEST:
+      return { loading: true, todos: [] };
+
+    case TODOS_SEARCH_SUCCESS:
+      return { loading: false, todos: action.payload };
+
+    case TODOS_SEARCH_FAIL:
+      return { loading: false, error: action.payload };
+
+    case TODOS_SEARCH_RESET:
+      return todosInitial;
+
+    default:
+      return state;
+  }
+};
+
+/*export const searchReducer = (
+  state = todosSearchInitial,
+  action: TodosTypes
+): IPayloadTodos => {
+  switch (action.type) {
+    case TODOS_SEARCH_REQUEST:
+      return { loading: true, todos: [] };
+
+    case TODOS_SEARCH_SUCCESS:
+      return { loading: false, todos: action.payload };
+
+    case TODOS_SEARCH_FAIL:
+      return { loading: false, error: action.payload };
+
+    default:
+      state;
+  }
+};*/

@@ -16,6 +16,10 @@ import {
   TODOS_CREATE_REQUEST,
   TODOS_CREATE_RESET,
   TODOS_CREATE_SUCCESS,
+  TODOS_SEARCH_REQUEST,
+  TODOS_SEARCH_FAIL,
+  TODOS_SEARCH_SUCCESS,
+  TODOS_SEARCH_RESET,
 } from '../constants';
 import * as api from '../../Apis/todosApiService';
 import { ITodoInfo } from '../interfaces/payloadTodo';
@@ -39,6 +43,33 @@ export const getTodosList = () => async (dispatch: any, getState: any) => {
           : error.message,
     });
   }
+};
+
+export const searchTodosList = (searchItem: string) => async (
+  dispatch: any,
+  getState: any
+) => {
+  try {
+    dispatch({ type: TODOS_SEARCH_REQUEST });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const data = await api.searchTodos(userInfo.id, userInfo.token, searchItem);
+    dispatch({ type: TODOS_SEARCH_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: TODOS_SEARCH_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const resetSearchList = () => (dispatch: any, getState: any) => {
+  dispatch({ type: TODOS_SEARCH_RESET });
 };
 
 export const updateTodoItem = (item: ITodoInfo) => async (

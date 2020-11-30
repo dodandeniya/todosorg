@@ -25,6 +25,10 @@ import {
   TODOS_CREATE_REQUEST,
   TODOS_CREATE_RESET,
   TODOS_CREATE_SUCCESS,
+  TODOS_SEARCH_REQUEST,
+  TODOS_SEARCH_FAIL,
+  TODOS_SEARCH_SUCCESS,
+  TODOS_SEARCH_RESET,
 } from '../constants';
 import { IUserInfo } from '../interfaces/payloadUser';
 
@@ -61,7 +65,11 @@ interface ITodosTypes {
     | typeof TODOS_CREATE_FAIL
     | typeof TODOS_CREATE_REQUEST
     | typeof TODOS_CREATE_RESET
-    | typeof TODOS_CREATE_SUCCESS;
+    | typeof TODOS_CREATE_SUCCESS
+    | typeof TODOS_SEARCH_REQUEST
+    | typeof TODOS_SEARCH_FAIL
+    | typeof TODOS_SEARCH_SUCCESS
+    | typeof TODOS_SEARCH_RESET;
   payload: any;
 }
 

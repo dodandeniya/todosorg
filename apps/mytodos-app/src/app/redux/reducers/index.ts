@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux';
-import { todoItemUpdateReducer, todosListReducer } from './todosReducer';
+import {
+  searchReducer,
+  todoItemUpdateReducer,
+  todosListReducer,
+} from './todosReducer';
 import { userReducer, userRegisterReducer } from './userReducer';
 
 const rootReducer = combineReducers({
@@ -7,6 +11,7 @@ const rootReducer = combineReducers({
   userRegister: userRegisterReducer,
   todosList: todosListReducer,
   todoUpdateItem: todoItemUpdateReducer,
+  searchItems: searchReducer,
 });
 
 export default rootReducer;

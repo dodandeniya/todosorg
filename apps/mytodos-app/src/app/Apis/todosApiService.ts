@@ -56,3 +56,17 @@ export const createTodoItem = async (item: any, token: string) => {
   const { data } = await axios.post(`/api/todos`, item, getConfig(token));
   return data;
 };
+
+export const searchTodos = async (
+  userId: string,
+  token: string,
+  searchItem: string
+) => {
+  const { data } = await axios.post(
+    `/api/todos/search/${userId}`,
+    { search: searchItem },
+    getConfig(token)
+  );
+
+  return data;
+};

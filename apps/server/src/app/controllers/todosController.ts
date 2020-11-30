@@ -5,7 +5,6 @@ import User from '../models/userModel';
 
 export const createTodoItem = asyncHandler(async (req, res) => {
   const { userId, todoName } = req.body;
-  let objectId = mongoose.Schema.Types.ObjectId;
 
   const temp = new Todo({
     user: userId,
@@ -25,6 +24,23 @@ export const createTodoItem = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Invalid todo item');
   }
+});
+
+export const searchTodoItem = asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+  const { search } = req.body;
+
+  const todoItemList = await Todo.find({
+    todoName: new RegExp('^' + search),
+    user: userId,
+  });
+
+  const result = todoItemList.map((item) => ({
+    id: item._id,
+    todoName: item.todoName,
+    status: item.status,
+  }));
+  res.json(result);
 });
 
 export const updateTodoItem = asyncHandler(async (req: any, res) => {

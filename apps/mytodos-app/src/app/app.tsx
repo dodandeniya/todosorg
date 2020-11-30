@@ -8,6 +8,7 @@ import HomeScreen from './screens/home-screen/HomeScreen';
 import './app.css';
 import RegisterScreen from './screens/register-screen/RegisterScreen';
 import CreateTodoScreen from './screens/create-todo-screen/CreateTodoScreen';
+import SearchScreen from './screens/search-screen/SearchScreen';
 
 export function App() {
   return (
@@ -19,6 +20,7 @@ export function App() {
         <Route path="/home" component={HomeScreen} />
         <Route path="/register" component={RegisterScreen} />
         <Route path="/addTodo" component={CreateTodoScreen} />
+        <Route path="/searchItem" component={SearchScreen} />
       </main>
       <Footer />
     </>
