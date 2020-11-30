@@ -12,7 +12,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
+import { useDispatch } from 'react-redux';
 import './LeftDrawer.css';
+import { removeCompletedTodoItems } from '../../redux/actions/todosActions';
 
 const useStyles = makeStyles({
   list: {
@@ -38,11 +40,9 @@ export interface DrawerProps {}
 
 export function LeftDrawer() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [state, setState] = React.useState({
-    top: false,
     left: false,
-    bottom: false,
-    right: false,
   });
 
   const toggleDrawer = (anchor: Anchor, open: boolean) => (
@@ -60,7 +60,7 @@ export function LeftDrawer() {
   };
 
   const clearTasks = (e: any) => {
-    console.log('Clear');
+    dispatch(removeCompletedTodoItems());
   };
 
   const list = (anchor: Anchor) => (

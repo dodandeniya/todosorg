@@ -80,6 +80,16 @@ export const deleteTodoItem = asyncHandler(async (req, res) => {
   }
 });
 
+export const deleteCompletedItems = asyncHandler(async (req, res) => {
+  try {
+    const result = await Todo.deleteMany({ status: 2 });
+    res.json(result);
+  } catch (error) {
+    res.status(404);
+    throw new Error('Todo items not found');
+  }
+});
+
 export const getTodoItemtById = asyncHandler(async (req, res) => {
   const item = await Todo.findById(req.params.id);
 

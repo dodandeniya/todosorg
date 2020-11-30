@@ -43,3 +43,11 @@ export const removeTodoItem = async (id: string, token: string) => {
 
   return data;
 };
+
+export const removeCompletedTodoItems = async (token: string) => {
+  const { data } = await axios.delete(
+    `/api/todos/deleteMany`,
+    getConfig(token)
+  );
+  return data;
+};

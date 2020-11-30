@@ -50,35 +50,33 @@ export function HomeScreen(props: HomeScreenProps) {
         <Typography className="m-3" component="h1" variant="h5">
           Available Todos
         </Typography>
-        {loading ? (
-          <Loader height="50vh" />
-        ) : error ? (
+        {loading && <Loader height="50vh" />}
+        {error && (
           <Container>
             <Alert severity="error">
               <AlertTitle>Error</AlertTitle>
               {error}
             </Alert>
           </Container>
-        ) : (
-          <Grid
-            container
-            direction="row"
-            justify="flex-start"
-            alignItems="flex-start"
-            spacing={2}
-          >
-            {todos.map((item: ITodoInfo) => (
-              <Grid key={item.id} item xs={12} sm={12} md={4} lg={4}>
-                <TodoItem
-                  item={item}
-                  startClickHandler={updateStatusHandler}
-                  completeClickHandler={updateStatusHandler}
-                  deleteClickHandler={deleteHandler}
-                />
-              </Grid>
-            ))}
-          </Grid>
         )}
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+          spacing={2}
+        >
+          {todos.map((item: ITodoInfo) => (
+            <Grid key={item.id} item xs={12} sm={12} md={4} lg={4}>
+              <TodoItem
+                item={item}
+                startClickHandler={updateStatusHandler}
+                completeClickHandler={updateStatusHandler}
+                deleteClickHandler={deleteHandler}
+              />
+            </Grid>
+          ))}
+        </Grid>
       </Container>
     </div>
   );
