@@ -9,30 +9,14 @@ import ClearAllIcon from '@material-ui/icons/ClearAll';
 import ListItemText from '@material-ui/core/ListItemText';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/Home';
 import { IconButton } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
 import './LeftDrawer.css';
 import { removeCompletedTodoItems } from '../../redux/actions/todosActions';
-
-const useStyles = makeStyles({
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
-  button: {
-    '&:focus': {
-      outline: 'none',
-    },
-    '&:hover': {
-      color: 'inherit',
-    },
-  },
-});
-
+import { useStyles } from '../../styles/style';
 type Anchor = 'left';
 
 /* eslint-disable-next-line */
@@ -71,6 +55,13 @@ export function LeftDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
+        <ListItem button component={Link} to="/">
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Home" />
+        </ListItem>
+
         <ListItem button component={Link} to="/addTodo">
           <ListItemIcon>
             <PlaylistAddIcon />
@@ -89,7 +80,7 @@ export function LeftDrawer() {
           <ListItemIcon>
             <ClearAllIcon />
           </ListItemIcon>
-          <ListItemText primary="Clear all completed tasks" />
+          <ListItemText primary="Clear all completed todos" />
         </ListItem>
       </List>
     </div>
@@ -99,7 +90,7 @@ export function LeftDrawer() {
     <div>
       <IconButton
         edge="start"
-        className={classes.button}
+        className={classes.menuIconButton}
         color="inherit"
         aria-label="menu"
         onClick={toggleDrawer('left', true)}

@@ -11,30 +11,11 @@ import {
   Typography,
   TextField,
   Button,
-  makeStyles,
-  Theme,
-  Grid,
-  createStyles,
   Container,
 } from '@material-ui/core';
 import { RootState } from '../../redux/reducers';
 import { Alert, AlertTitle } from '@material-ui/lab';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    button: {
-      marginTop: '20px',
-      backgroundColor: theme.palette.primary.main,
-      color: 'white',
-      '&:focus': {
-        outline: 'none',
-      },
-      '&:hover': {
-        backgroundColor: theme.palette.primary.light,
-      },
-    },
-  })
-);
+import { useStyles } from '../../styles/style';
 
 /* eslint-disable-next-line */
 export interface LoginScreenProps {
@@ -112,11 +93,20 @@ export const LoginScreen = (props: LoginScreenProps) => {
             />
           </FormGroup>
 
-          <Button type="submit" className={`${classes.button} btn-block`}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={`${classes.button} btn-block`}
+          >
             Sign In
           </Button>
         </form>
       </Card>
+      New Customer?{' '}
+      <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
+        Register
+      </Link>
     </CenterComponent>
   );
 };

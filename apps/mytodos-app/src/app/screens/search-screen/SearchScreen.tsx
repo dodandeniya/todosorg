@@ -5,9 +5,6 @@ import {
   FormGroup,
   TextField,
   Button,
-  makeStyles,
-  createStyles,
-  Theme,
 } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react';
@@ -24,30 +21,18 @@ import {
   searchTodosList,
   updateTodoItem,
 } from '../../redux/actions/todosActions';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    button: {
-      marginTop: '20px',
-      backgroundColor: theme.palette.primary.main,
-      color: 'white',
-      '&:focus': {
-        outline: 'none',
-      },
-      '&:hover': {
-        backgroundColor: theme.palette.primary.light,
-      },
-    },
-  })
-);
+import { useStyles } from '../../styles/style';
 
 /* eslint-disable-next-line */
-export interface SearchScreenProps {}
+export interface SearchScreenProps {
+  history: any;
+}
 
 export function SearchScreen(props: SearchScreenProps) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [todoName, setTodoName] = useState('');
+  const userLogin = useSelector((state: RootState) => state.userLogin);
   const { loading, error, todos } = useSelector(
     (state: RootState) => state.searchItems
   );
@@ -55,6 +40,13 @@ export function SearchScreen(props: SearchScreenProps) {
   useEffect(() => {
     if (todoName === '') dispatch(resetSearchList());
   });
+
+  useEffect(() => {
+    if (!userLogin.userInfo) {
+      props.history.push('/login');
+      return;
+    }
+  }, [props.history, userLogin]);
 
   const updateStatusHandler = (item: ITodoInfo) => {
     dispatch(updateTodoItem(item));
@@ -89,7 +81,12 @@ export function SearchScreen(props: SearchScreenProps) {
             />
           </FormGroup>
 
-          <Button type="submit" className={`${classes.button} btn-block`}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={`${classes.button} btn-block`}
+          >
             Search
           </Button>
         </form>

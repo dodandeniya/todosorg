@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { CenterComponent } from '../../components/center-component/CenterComponent';
 import { Loader } from '../../components/loader/Loader';
@@ -9,35 +8,14 @@ import {
   Typography,
   TextField,
   Button,
-  makeStyles,
-  Theme,
-  Grid,
-  createStyles,
   Container,
 } from '@material-ui/core';
 import { RootState } from '../../redux/reducers';
 import { Alert, AlertTitle } from '@material-ui/lab';
-
+import { useStyles } from '../../styles/style';
 import './CreateTodoScreen.css';
 import { CreateTodoItem } from '../../redux/actions/todosActions';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    button: {
-      marginTop: '20px',
-      backgroundColor: theme.palette.primary.main,
-      color: 'white',
-      '&:focus': {
-        outline: 'none',
-      },
-      '&:hover': {
-        backgroundColor: theme.palette.primary.light,
-      },
-    },
-  })
-);
-
-/* eslint-disable-next-line */
 export interface CreateTodoScreenProps {
   history: any;
 }
@@ -46,8 +24,16 @@ export function CreateTodoScreen(props: CreateTodoScreenProps) {
   const classes = useStyles();
   const [todoName, setTodoName] = useState('');
   const todosList = useSelector((state: RootState) => state.todosList);
+  const userLogin = useSelector((state: RootState) => state.userLogin);
   const { loading, error } = todosList;
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!userLogin.userInfo) {
+      props.history.push('/login');
+      return;
+    }
+  }, [props.history, userLogin]);
 
   const submitHandler = (e: any) => {
     e.preventDefault();
@@ -88,7 +74,12 @@ export function CreateTodoScreen(props: CreateTodoScreenProps) {
             />
           </FormGroup>
 
-          <Button type="submit" className={`${classes.button} btn-block`}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={`${classes.button} btn-block`}
+          >
             Create
           </Button>
         </form>

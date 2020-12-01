@@ -3,40 +3,18 @@ import {
   Card,
   CardActions,
   CardContent,
-  createStyles,
   Grid,
   IconButton,
-  makeStyles,
-  Theme,
   Typography,
 } from '@material-ui/core';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ITodoInfo } from '../../redux/interfaces/payloadTodo';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green, orange, grey } from '@material-ui/core/colors';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { useStyles } from '../../styles/style';
 
 import './TodoItem.css';
-import { AnyAction } from 'redux';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    button: {
-      color: 'white',
-      '&:focus': {
-        outline: 'none',
-      },
-      '&:hover': {
-        color: 'white',
-      },
-    },
-    Deletebtn: {
-      '&:focus': {
-        outline: 'none',
-      },
-    },
-  })
-);
 
 /* eslint-disable-next-line */
 export interface TodoItemProps {
@@ -104,7 +82,7 @@ export function TodoItem({
             <Grid item>
               {item.status === 0 && (
                 <Button
-                  className={classes.button}
+                  className={classes.todoButton}
                   variant="contained"
                   color="primary"
                   size="small"
@@ -115,7 +93,7 @@ export function TodoItem({
               )}
               {status === 1 && (
                 <Button
-                  className={classes.button}
+                  className={classes.todoButton}
                   variant="contained"
                   color="primary"
                   size="small"
@@ -127,7 +105,7 @@ export function TodoItem({
               <IconButton
                 aria-label="delete"
                 color="secondary"
-                className={classes.Deletebtn}
+                className={classes.deletebtn}
                 onClick={() => deleteClickHandler(item)}
               >
                 <DeleteIcon />

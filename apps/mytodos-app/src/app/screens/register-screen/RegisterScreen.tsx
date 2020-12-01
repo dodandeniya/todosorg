@@ -10,31 +10,12 @@ import {
   Typography,
   TextField,
   Button,
-  makeStyles,
-  Theme,
-  createStyles,
   Container,
 } from '@material-ui/core';
 import { RootState } from '../../redux/reducers';
 import { Alert, AlertTitle } from '@material-ui/lab';
-
+import { useStyles } from '../../styles/style';
 import './RegisterScreen.css';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    button: {
-      marginTop: '20px',
-      backgroundColor: theme.palette.primary.main,
-      color: 'white',
-      '&:focus': {
-        outline: 'none',
-      },
-      '&:hover': {
-        backgroundColor: theme.palette.primary.light,
-      },
-    },
-  })
-);
 
 /* eslint-disable-next-line */
 export interface RegisterScreenProps {
@@ -71,7 +52,7 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
     dispatch(register(firstName, lastName, email, password));
   };
 
-  const onfocusoutHandler = (e: any) => {
+  const onfocusoutHandler = () => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match');
       setButtonDisable(true);
@@ -178,6 +159,8 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
 
           <Button
             type="submit"
+            variant="contained"
+            color="primary"
             disabled={isButtonDisabled}
             className={`${classes.button} btn-block`}
           >

@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import PersonIcon from '@material-ui/icons/Person';
-import ListIcon from '@material-ui/icons/List';
 import { Link } from 'react-router-dom';
 import {
   AppBar,
-  Badge,
   Button,
-  IconButton,
   Menu,
   MenuItem,
   Toolbar,
@@ -17,40 +13,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/reducers';
 import { logout } from '../../redux/actions/userActions';
 import LeftDrawer from '../../components/drawer/LeftDrawer';
+import { useStyles } from '../../styles/style';
 import './Header.css';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-
-    button: {
-      '&:focus': {
-        outline: 'none',
-      },
-      '&:hover': {
-        color: 'inherit',
-      },
-    },
-
-    title: {
-      '&:hover': {
-        color: 'inherit',
-        textDecoration: 'none',
-      },
-    },
-
-    spaceSection: {
-      flexGrow: 1,
-    },
-  })
-);
 
 /* eslint-disable-next-line */
 export interface HeaderProps {}
 
-export function Header(props: HeaderProps) {
+export function Header() {
   const classes = useStyles();
   const { userInfo } = useSelector((state: RootState) => state.userLogin);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -68,10 +37,6 @@ export function Header(props: HeaderProps) {
   const logoutHandler = () => {
     setAnchorEl(null);
     dispatch(logout());
-  };
-
-  const profileHandler = () => {
-    setAnchorEl(null);
   };
 
   return (
@@ -100,7 +65,7 @@ export function Header(props: HeaderProps) {
           {userInfo ? (
             <div>
               <Button
-                className={classes.button}
+                className={classes.menuIconButton}
                 color="inherit"
                 startIcon={<PersonIcon />}
                 aria-controls="menu-appbar"
@@ -129,7 +94,7 @@ export function Header(props: HeaderProps) {
             </div>
           ) : (
             <Button
-              className={classes.button}
+              className={classes.menuIconButton}
               color="inherit"
               startIcon={<PersonIcon />}
               component={Link}

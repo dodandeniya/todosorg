@@ -16,18 +16,13 @@ import {
   TODOS_REMOVE_COMPLETED_ITEMS_REQUEST,
   TODOS_CREATE_FAIL,
   TODOS_CREATE_REQUEST,
-  TODOS_CREATE_RESET,
   TODOS_CREATE_SUCCESS,
   TODOS_SEARCH_REQUEST,
   TODOS_SEARCH_FAIL,
   TODOS_SEARCH_SUCCESS,
   TODOS_SEARCH_RESET,
 } from '../constants';
-import {
-  todoItemInitial,
-  todosInitial,
-  todosSearchInitial,
-} from '../initialStates';
+import { todoItemInitial, todosInitial } from '../initialStates';
 import { IPayloadTodos, ITodoInfo } from '../interfaces/payloadTodo';
 
 export const todosListReducer = (
@@ -42,7 +37,7 @@ export const todosListReducer = (
       return { loading: false, todos: action.payload };
 
     case TODOS_LIST_FAIL:
-      return { loading: false, error: action.payload };
+      return { ...state, loading: false, error: action.payload };
 
     case TODOS_LIST_RESET:
       return todosInitial;
@@ -72,16 +67,6 @@ export const todosListReducer = (
       return { ...state, todos: [...state.todos, action.payload] };
     case TODOS_CREATE_FAIL:
       return { error: action.payload, ...state };
-
-    /*case TODOS_SEARCH_REQUEST:
-      return { loading: true, todos: [] };
-
-    case TODOS_SEARCH_SUCCESS:
-      return { loading: false, todos: action.payload };
-
-    case TODOS_SEARCH_FAIL:
-      return { loading: false, error: action.payload };*/
-
     default:
       return state;
   }

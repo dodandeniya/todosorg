@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { ITodoInfo } from '../redux/interfaces/payloadTodo';
 
 const getConfig = (token: string) => {
   return {

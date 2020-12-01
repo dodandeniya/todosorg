@@ -14,7 +14,6 @@ import {
   TODOS_REMOVE_COMPLETED_ITEMS_FAIL,
   TODOS_CREATE_FAIL,
   TODOS_CREATE_REQUEST,
-  TODOS_CREATE_RESET,
   TODOS_CREATE_SUCCESS,
   TODOS_SEARCH_REQUEST,
   TODOS_SEARCH_FAIL,
@@ -68,7 +67,7 @@ export const searchTodosList = (searchItem: string) => async (
   }
 };
 
-export const resetSearchList = () => (dispatch: any, getState: any) => {
+export const resetSearchList = () => (dispatch: any) => {
   dispatch({ type: TODOS_SEARCH_RESET });
 };
 
@@ -88,8 +87,6 @@ export const updateTodoItem = (item: ITodoInfo) => async (
     let temp = { _id: item.id, status: item.status };
 
     const data = await api.updateTodoItem(temp, userInfo.token);
-    var foundItem = todos.find((x) => x.id == data.id);
-    foundItem = item;
 
     dispatch({ type: TODOS_UPDATE_SUCCESS, payload: data });
     dispatch({ type: TODOS_UPDATE_RESET });
@@ -173,7 +170,7 @@ export const CreateTodoItem = (item: string) => async (
     dispatch({ type: TODOS_CREATE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
-      type: TODOS_LIST_FAIL,
+      type: TODOS_CREATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
