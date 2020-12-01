@@ -1,7 +1,5 @@
 import Todo from '../models/todoModel';
 import * as asyncHandler from 'express-async-handler';
-import * as mongoose from 'mongoose';
-import User from '../models/userModel';
 
 export const createTodoItem = asyncHandler(async (req, res) => {
   const { userId, todoName } = req.body;

@@ -1,0 +1,7 @@
+{
+    "inputFiles": ["./apps/mytodos-app/src"],
+    "mode": "file",
+    "tsconfig":"./apps/mytodos-app/tsconfig.json",
+    "out": "doc",
+    "exclude": "**/*+(index|.spec|.e2e).tsx"
+  }

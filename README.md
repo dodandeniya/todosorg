@@ -22,3 +22,7 @@ Simple Todo application developed mainly using following technologies
 
 - `npm install`
 - `npm run dev`
+
+### For documentation
+
+In doc dir you can find the documentation
