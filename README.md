@@ -26,3 +26,7 @@ Simple Todo application developed mainly using following technologies
 ### For documentation
 
 In doc dir you can find the documentation
+
+### For live demo
+
+https://mytodosorg.herokuapp.com/
