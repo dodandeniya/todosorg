@@ -1,5 +1,5 @@
 
-FROM node:15.3.0
+FROM node:alpine
 
 RUN npm install -g nodemon
 
@@ -11,6 +11,6 @@ RUN mkdir -p /app/server && cp -a /tmp/node_modules /app/server/
 WORKDIR /app/server
 COPY dist/apps/server/ /app/server
 
-EXPOSE 3333
+EXPOSE $PORT
 
 CMD [ "nodemon", "main.js" ]
